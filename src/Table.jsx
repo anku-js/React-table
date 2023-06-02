@@ -58,26 +58,8 @@ export default function Table({ data, columns }) {
                         )}
                       </div> : ""
                       }
-                      {/* {{
-                        asc: (
-                          <TiArrowSortedUp
-                            onClick={header.column.getToggleSortingHandler()}
-                          />
-                        ),
-                        desc: (
-                          <TiArrowSortedDown
-                            onClick={header.column.getToggleSortingHandler()}
-                          />
-                        ),
-                      }[header.column.getIsSorted()] ?? null} */}
                     </div>
                   )}
-                  {/* {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )} */}
                 </th>
               ))}
             </tr>

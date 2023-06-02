@@ -12,7 +12,7 @@ export default function App() {
   const dataFromLocalStorage = JSON.parse(localStorage.getItem("editedDate"));
 
   const [initialData, setInitialData] = useState(sortedData);
-
+  
   const [data, setData] = useState(
     dataFromLocalStorage ? dataFromLocalStorage : sortedData
   );
