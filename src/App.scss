@@ -1,0 +1,134 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4b6381;
+  min-height: 100vh;
+  .table-container {
+    background-color: #29344b;
+    padding: 40px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    .table-body {
+      font-family: "Poppins", sans-serif;
+      .table-header-wrapper {
+        font-size: 22px;
+        background-color: #675883;
+        color: #e0d4f6;
+        tr {
+          th {
+            padding: 15px;
+            border: 1px solid #29344b;
+            .table-header {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 5px;
+              .sorting-arrows {
+                display: flex;
+                flex-direction: column;
+                gap: 0px;
+              }
+            }
+          }
+        }
+      }
+      .table-data {
+        background-color: #c9bce2;
+        color: #302547;
+        tr {
+          td {
+            font-size: 16px;
+            padding: 14px;
+            border: 1px solid #29344b;
+            input {
+              width: 100%;
+              background-color: transparent;
+              font-size: 16px;
+              border: none;
+            }
+            input:focus {
+              outline: none;
+              border: none;
+            }
+          }
+        }
+      }
+    }
+    .buttons-container {
+      display: flex;
+      align-self: flex-end;
+      gap: 20px;
+      button {
+        font-size: 20px;
+        padding: 14px 30px;
+        border-radius: 6px;
+        background-color: #52ab98;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 780px) {
+  body {
+    .table-container {
+      padding: 10px;
+      gap: 10px;
+      .table-body {
+        .table-header-wrapper {
+          background-color: #675883;
+          color: #e0d4f6;
+          tr {
+            th {
+              padding: 2px;
+              border: 1px solid #29344b;
+              .table-header {
+                font-size: 14px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 5px;
+                .sorting-arrows {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 0px;
+                }
+              }
+            }
+          }
+        }
+        .table-data {
+          tr {
+            td {
+              font-size: 12px;
+              padding: 2px;
+              input {
+                font-size: 14px;
+              }
+            }
+          }
+        }
+      }
+      .buttons-container {
+        gap: 10px;
+        button {
+          font-size: 14px;
+          padding: 6px 10px;
+        }
+      }
+    }
+  }
+}
