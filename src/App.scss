@@ -27,13 +27,12 @@ body {
         color: #e0d4f6;
         tr {
           th {
+            border: 0.2px dashed #e0d4f6;
             padding: 15px;
-            border: 1px solid #29344b;
             .table-header {
               display: flex;
               justify-content: space-between;
               align-items: center;
-              padding: 5px;
               .sorting-arrows {
                 display: flex;
                 flex-direction: column;
@@ -49,17 +48,17 @@ body {
         tr {
           td {
             font-size: 16px;
-            padding: 14px;
-            border: 1px solid #29344b;
+            padding: 15px;
+            max-width: 500px;
             input {
               width: 100%;
-              background-color: transparent;
+              background-color: #e0d7f3;
               font-size: 16px;
-              border: none;
+              padding: 5px 0px;
+              text-align: center;
             }
             input:focus {
               outline: none;
-              border: none;
             }
           }
         }
@@ -89,23 +88,11 @@ body {
       gap: 10px;
       .table-body {
         .table-header-wrapper {
-          background-color: #675883;
-          color: #e0d4f6;
           tr {
             th {
               padding: 2px;
-              border: 1px solid #29344b;
               .table-header {
                 font-size: 14px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 5px;
-                .sorting-arrows {
-                  display: flex;
-                  flex-direction: column;
-                  gap: 0px;
-                }
               }
             }
           }
