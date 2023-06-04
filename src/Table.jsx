@@ -80,6 +80,7 @@ export default function Table({ data, columns }) {
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id}>
                   <div className="grouping-container">
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     {cell.column.columnDef.grouping ? (
                       <div>
                         {console.log(cell.row.original)}
@@ -103,7 +104,7 @@ export default function Table({ data, columns }) {
                         )}
                       </div>
                     ) : null}
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+
                   </div>
                 </td>
               ))}
