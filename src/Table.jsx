@@ -78,13 +78,14 @@ export default function Table({ data, columns }) {
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
+                <td key={cell.id}>  
                   <div className="grouping-container">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    {cell.column.columnDef.grouping ? (
+                    { cell.column.columnDef.grouping ? (
                       <div>
                         {console.log(cell.row.original)}
-                        {cell.row.original.category === "appetizer" ? (
+                        {cell.row.original.id === 1 &&
+                        cell.row.original.category === "appetizer" ? (
                           <button
                             {...{
                               onClick: cell.column.getToggleGroupingHandler(),
@@ -104,7 +105,6 @@ export default function Table({ data, columns }) {
                         )}
                       </div>
                     ) : null}
-
                   </div>
                 </td>
               ))}

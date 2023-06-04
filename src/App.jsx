@@ -2,8 +2,7 @@ import React, { useState, useMemo } from "react";
 import tableData from "./dataBase";
 import Table from "./Table";
 import "./App.scss";
-import { createColumnHelper,   getGroupedRowModel,
-  getExpandedRowModel } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 
 export default function App() {
   const columnHelper = createColumnHelper();
