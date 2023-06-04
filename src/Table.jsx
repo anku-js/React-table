@@ -4,6 +4,8 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   useReactTable,
+  getGroupedRowModel,
+  getExpandedRowModel,
 } from "@tanstack/react-table";
 import {
   TiArrowSortedDown,
@@ -13,12 +15,17 @@ import {
 
 export default function Table({ data, columns }) {
   const [sorting, setSorting] = useState([]);
+  const [grouping, setGrouping] = useState([]);
   const table = useReactTable({
     data,
     columns,
     state: {
       sorting,
+      grouping,
     },
+    onGroupingChange: setGrouping,
+    getExpandedRowModel: getExpandedRowModel(),
+    getGroupedRowModel: getGroupedRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     getCoreRowModel: getCoreRowModel(),
@@ -38,26 +45,28 @@ export default function Table({ data, columns }) {
                         header.column.columnDef.header,
                         header.getContext()
                       )}
-                      {
-                        header.column.columnDef.enableSorting ? <div className="sorting-arrows">
-                        {{
-                          asc: (
-                            <TiArrowSortedDown
+                      {header.column.columnDef.enableSorting ? (
+                        <div className="sorting-arrows">
+                          {{
+                            asc: (
+                              <TiArrowSortedDown
+                                onClick={header.column.getToggleSortingHandler()}
+                              />
+                            ),
+                            desc: (
+                              <TiArrowSortedUp
+                                onClick={header.column.getToggleSortingHandler()}
+                              />
+                            ),
+                          }[header.column.getIsSorted()] ?? (
+                            <TiArrowUnsorted
                               onClick={header.column.getToggleSortingHandler()}
                             />
-                          ),
-                          desc: (
-                            <TiArrowSortedUp
-                              onClick={header.column.getToggleSortingHandler()}
-                            />
-                          ),
-                        }[header.column.getIsSorted()] ?? (
-                          <TiArrowUnsorted
-                            onClick={header.column.getToggleSortingHandler()}
-                          />
-                        )}
-                      </div> : ""
-                      }
+                          )}
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   )}
                 </th>
@@ -70,7 +79,32 @@ export default function Table({ data, columns }) {
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  <div className="grouping-container">
+                    {cell.column.columnDef.grouping ? (
+                      <div>
+                        {console.log(cell.row.original)}
+                        {cell.row.original.category === "appetizer" ? (
+                          <button
+                            {...{
+                              onClick: cell.column.getToggleGroupingHandler(),
+                              style: {
+                                cursor: "pointer",
+                              },
+                            }}
+                          >
+                            {cell.column.getIsGrouped() ? (
+                              <TiArrowSortedDown />
+                            ) : (
+                              <TiArrowSortedUp />
+                            )}
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    ) : null}
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </div>
                 </td>
               ))}
             </tr>
