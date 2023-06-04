@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import tableData from "./dataBase";
 import Table from "./Table";
 import "./App.scss";
-import { createColumnHelper } from "@tanstack/react-table";
-import Input from "./HandleChange";
+import { createColumnHelper,   getGroupedRowModel,
+  getExpandedRowModel } from "@tanstack/react-table";
 
 export default function App() {
   const columnHelper = createColumnHelper();
@@ -18,63 +18,69 @@ export default function App() {
     dataFromLocalStorage ? dataFromLocalStorage : sortedData
   );
 
-  const [priceAdded, setPriceAdded] = useState("");
-
   function handleSave() {
     localStorage.setItem("editedDate", JSON.stringify(data));
   }
 
   function handleReset() {
+    localStorage.removeItem("editedDate");
     setData(initialData);
   }
 
-  function handleChange(event, id) {
-    const { value } = event.target;
-    const priceSet = value;
-    setData((tableData) =>
-      tableData.map((data) => {
-        return data.id === id ? { ...data, price: priceSet } : data;
-      })
-    );
-  }
-  console.log(priceAdded);
-  // data.price !== priceAdded : data;
-  const columns = [
-    columnHelper.accessor("name", {
-      header: "Name",
-      cell: (info) => info.getValue(),
-      enableSorting: true,
-    }),
-    columnHelper.accessor("category", {
-      header: "Category",
-      cell: (info) => info.getValue(),
-      enableSorting: false,
-    }),
-    columnHelper.accessor("label", {
-      header: "Label",
-      cell: (info) => info.getValue(),
-      enableSorting: false,
-    }),
-    columnHelper.accessor("price", {
-      header: () => "Price",
-      cell: ({ cell, getValue }) => (
-        <div>
-          <Input
-            handleChange={(event) => handleChange(event, cell.row.original.id)}
-            getValue={getValue}
-          />
-        </div>
-      ),
-      enableSorting: true,
-    }),
-    columnHelper.accessor("description", {
-      header: "Description",
-      cell: (info) => info.getValue(),
-      enableSorting: false,
-      size: 300,
-    }),
-  ];
+  const handlePriceChange = (row, value) => {
+    const updatedData = data.map((product, index) => {
+      if (index === row.index) {
+        return { ...product, price: Number(value) };
+      }
+      return product;
+    });
+    setData(updatedData);
+  };
 
+  const columns = useMemo(
+    () => [
+      columnHelper.accessor("category", {
+        header: "Category",
+        cell: (info) => info.getValue(),
+        enableSorting: false,
+        grouping: true
+        // getGroupingValue: row => `${row.category}
+      }),
+      columnHelper.accessor("name", {
+        header: "Name",
+        cell: (info) => info.getValue(),
+        enableSorting: true,
+        grouping: false
+      }),
+      columnHelper.accessor("label", {
+        header: "Label",
+        cell: (info) => info.getValue(),
+        enableSorting: false,
+        grouping: false
+      }),
+      columnHelper.accessor("price", {
+        header: () => "Price",
+        cell: ({ row, getValue }) => (
+          <div>
+            <input
+              type="number"
+              value={getValue()}
+              onChange={(e) => handlePriceChange(row, e.target.value)}
+            />
+          </div>
+        ),
+        enableSorting: true,
+        grouping: false
+      }),
+      columnHelper.accessor("description", {
+        header: "Description",
+        cell: (info) => info.getValue(),
+        enableSorting: false,
+        grouping: false
+      }),
+    ],
+    []
+  );
   return (
     <div className="table-container">
       <div className="buttons-container">
@@ -88,12 +94,4 @@ export default function App() {
       <Table columns={columns} data={data} />
     </div>
   );
-}
-{
-  /* <input
-type="text"
-onChange={(event) => handleChange(event, cell.row.original.id)}
-value={getValue()}
-/>
-</form> */
 }
