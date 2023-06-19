@@ -78,34 +78,38 @@ export default function Table({ data, columns }) {
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>  
-                  <div className="grouping-container">
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    { cell.column.columnDef.grouping ? (
-                      <div>
-                        {console.log(cell.row.original)}
-                        {cell.row.original.id === 1 &&
-                        cell.row.original.category === "appetizer" ? (
-                          <button
-                            {...{
-                              onClick: cell.column.getToggleGroupingHandler(),
-                              style: {
-                                cursor: "pointer",
-                              },
-                            }}
-                          >
-                            {cell.column.getIsGrouped() ? (
-                              <TiArrowSortedDown />
-                            ) : (
-                              <TiArrowSortedUp />
-                            )}
-                          </button>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    ) : null}
-                  </div>
+                <td key={cell.id}>
+                  {cell.column.getCanGroup() ?  (
+                    <div className="grouping-container">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                      {/* {cell.column.columnDef.grouping ? (
+                        <div>
+                          {cell.row.original.id === 1 &&
+                          cell.row.original.category === "appetizer" ? (
+                            <button
+                              {...{
+                                onClick: cell.column.getToggleGroupingHandler(),
+                                style: {
+                                  cursor: "pointer",
+                                },
+                              }}
+                            >
+                              {cell.column.getIsGrouped() ? (
+                                <TiArrowSortedDown />
+                              ) : (
+                                <TiArrowSortedUp />
+                              )}
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      ) : null} */}
+                    </div>
+                  ) : null}
                 </td>
               ))}
             </tr>
@@ -115,3 +119,6 @@ export default function Table({ data, columns }) {
     </div>
   );
 }
+// the project tht im proud of is my portfo;io. its simple, eyecatching and made with a very basic piece of code. easy to read and get details its made with react
+
+// for automating the loyalty syatem at restuarant we can do the following steps. the first time user visits a restuarant we can register their details and based on whether the user is registered we can initialise an empty array and every time user enters the restuarant hthe information will be pushed in the array in the form of objects, we can show user their number of visits by calculating the length of array and every time the length of array is in multiple of 5 we can give the reward
